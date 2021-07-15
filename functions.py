@@ -22,4 +22,18 @@ def enterData():
     directory = validateDir(directory)
     return numLinks, directory
 
-(numLinks, directory) = enterData()
+# (numLinks, directory) = enterData()
+
+def storeData(numLinks):
+    data = []
+    createDirectory = input('Create directory to store downloaded files? y (Enter skip) ')
+    if createDirectory == 'y':
+        newDirectory = input('Enter the name of the directory to create: ')
+        newDirectory = f"mkdir '{newDirectory}' && cd '{newDirectory}'"
+        data.append(newDirectory)
+
+    for i in range(0, numLinks, 1):
+        link = input(f'Enter the link {i+1} of {numLinks}: ')
+        data.append(link)
+
+    return data
