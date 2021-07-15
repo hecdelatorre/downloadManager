@@ -20,10 +20,8 @@ def enterData():
     numLinks = validateNumber(numLinks)
     directory = input('Enter the download path: ')
     directory = validateDir(directory)
-    fileName = input('Enter the executable name')
+    fileName = input('Enter the executable name: ')
     return numLinks, directory, fileName
-
-# (numLinks, directory) = enterData()
 
 def storeData(numLinks):
     data = []
