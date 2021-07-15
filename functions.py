@@ -20,7 +20,8 @@ def enterData():
     numLinks = validateNumber(numLinks)
     directory = input('Enter the download path: ')
     directory = validateDir(directory)
-    return numLinks, directory
+    fileName = input('Enter the executable name')
+    return numLinks, directory, fileName
 
 # (numLinks, directory) = enterData()
 
@@ -37,3 +38,25 @@ def storeData(numLinks):
         data.append(link)
 
     return data
+
+def printData(directory, fileName, data, numLinks):
+    file = open(f"{directory}/{fileName}.sh", "w")
+    startTime = "echo -e '\\n' && date +'StartTime: %D %r' && echo -e '\\n'"
+    print(startTime)
+    file.write(f'{startTime}\n')
+    count = 0
+
+    for dat in data:
+        if count == 0 and data[count].find('mkdir') == 0:
+            print(data[count])
+            file.write(f'{data[count]}\n')
+        count += 1
+
+        linkFormat = f"echo -e ' File {count} of {numLinks}\\n'\nwget --retry-connrefused -nc '{dat}'"
+        print(linkFormat)
+        file.write(f'{linkFormat}\n')
+
+    endTime = "date +'EndTime: %D %r'"
+    print(endTime)
+    file.write(endTime)
+    file.close()
