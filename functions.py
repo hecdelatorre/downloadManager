@@ -48,11 +48,11 @@ def printData(directory, fileName, data, numLinks):
         if count == 0 and data[count].find('mkdir') == 0:
             print(data[count])
             file.write(f'{data[count]}\n')
+        else:
+            linkFormat = f"echo -e ' File {count} of {numLinks}\\n'\nwget --retry-connrefused -nc '{dat}'"
+            print(linkFormat)
+            file.write(f'{linkFormat}\n')
         count += 1
-
-        linkFormat = f"echo -e ' File {count} of {numLinks}\\n'\nwget --retry-connrefused -nc '{dat}'"
-        print(linkFormat)
-        file.write(f'{linkFormat}\n')
 
     endTime = "date +'EndTime: %D %r'"
     print(endTime)
