@@ -49,7 +49,7 @@ def printData(directory, fileName, data, numLinks):
             print(data[count])
             file.write(f'{data[count]}\n')
         else:
-            linkFormat = f"echo -e ' File {count + 1} of {numLinks}\\n'\nwget --retry-connrefused -nc '{dat}'"
+            linkFormat = f"echo -e ' File {count + 1} of {numLinks}\\n'\naria2c -c --seed-time=0 '{dat}'"
             print(linkFormat)
             file.write(f'{linkFormat}\n')
         count += 1
