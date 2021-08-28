@@ -39,19 +39,20 @@ def storeData(numLinks):
 
 def printData(directory, fileName, data, numLinks):
     file = open(f"{directory}/{fileName}.sh", "w")
-    startTime = "echo -e '\\n' && date +'StartTime: %D %r' && echo -e '\\n'"
+    startTime = "date +'StartTime: %D %r'"
     print(startTime)
     file.write(f'{startTime}\n')
-    count = 0
+    count, c = 0, 1
 
     for dat in data:
         if count == 0 and data[count].find('mkdir') == 0:
             print(data[count])
             file.write(f'{data[count]}\n')
         else:
-            linkFormat = f"echo -e ' File {count + 1} of {numLinks}\\n'\naria2c -c --seed-time=0 '{dat}'"
+            linkFormat = f"echo -e '\\n  File {c} of {numLinks}'\naria2c -c --seed-time=0 '{dat}'"
             print(linkFormat)
             file.write(f'{linkFormat}\n')
+            c += 1
         count += 1
 
     endTime = "date +'EndTime: %D %r'"
