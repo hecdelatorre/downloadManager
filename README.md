@@ -3,6 +3,10 @@
 ```
 python3 downloadManager.py
 ```
+### Install
+```sh
+pip install colored bullet
+```
 ### It is necessary to have aria2 installed
 * Arch Linux
 ```sh

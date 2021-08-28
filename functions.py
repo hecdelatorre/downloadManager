@@ -1,8 +1,15 @@
-# downloadManager 
 from os.path import isdir 
+from getpass import getuser
+from bullet import Input, YesNo, Numbers, colors
+from colored import fg, attr
+
+colorRed = fg('#CC0000')
+colorGreen = fg('#73D216')
+colorBlue = fg('#338CFF')
+res = attr('reset')
 
 def err():
-    print('Wrong data')
+    print(f'{colorRed}Wrong data{res}')
     exit()
 
 def validateNumber(number):
@@ -16,28 +23,28 @@ def validateDir(directory):
     else: return directory 
 
 def enterData():
-    numLinks = input('Enter the number of links: ')
-    numLinks = validateNumber(numLinks)
-    directory = input('Enter the download path: ')
+    numLinks = Numbers(f'{colorGreen}Enter the number of links: {res}', word_color = colors.foreground["yellow"], type=int).launch()
+    directory = Input(f'{colorGreen}Enter the download path: {res}', default = f"/home/{getuser()}/Downloads", word_color = colors.foreground["yellow"]).launch()
     directory = validateDir(directory)
-    fileName = input('Enter the executable name: ')
+    fileName = Input(f'{colorGreen}Enter the executable name: {res}', default = "default", word_color = colors.foreground["yellow"]).launch()
     return numLinks, directory, fileName
 
 def storeData(numLinks):
     data = []
-    createDirectory = input('Create directory to store downloaded files? y (Enter skip) ')
-    if createDirectory == 'y':
-        newDirectory = input('Enter the name of the directory to create: ')
+    createDirectory = YesNo(f'{colorGreen}Create directory to store downloaded files? {res}', default = 'n', word_color = colors.foreground["yellow"]).launch()
+    if createDirectory:
+        newDirectory = Input(f'{colorGreen}Enter the name of the directory to create: {res}', default='default', word_color = colors.foreground["yellow"]).launch()
         newDirectory = f"mkdir '{newDirectory}' && cd '{newDirectory}'"
         data.append(newDirectory)
 
     for i in range(0, numLinks, 1):
-        link = input(f'Enter the link {i+1} of {numLinks}: ')
+        link = Input(f'{colorBlue}Enter the link {i+1} of {numLinks}: {res}', word_color = colors.foreground["yellow"]).launch()
         data.append(link)
 
     return data
 
 def printData(directory, fileName, data, numLinks):
+    print()
     file = open(f"{directory}/{fileName}.sh", "w")
     startTime = "date +'StartTime: %D %r'"
     print(startTime)
